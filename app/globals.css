@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0a0906;
+  color: #f4efe3;
+  font-feature-settings: "ss01" on, "ss02" on;
+}
+
+::selection {
+  background-color: rgba(201, 162, 76, 0.35);
+  color: #f4efe3;
+}
+
+/* Custom scrollbar — thin, gold-tinted */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0906;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #c9a24c, #6b511d);
+  border-radius: 999px;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Visible keyboard focus for accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #c9a24c;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@layer components {
+  /* Signature "goldsmith line" — a thin engraved gold thread used as section divider */
+  .gold-thread {
+    position: relative;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(201, 162, 76, 0.7) 50%,
+      transparent 100%
+    );
+  }
+
+  .glass-panel {
+    background: rgba(21, 18, 9, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(201, 162, 76, 0.15);
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #f0e3bf 0%, #c9a24c 45%, #8a6a26 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .eyebrow {
+    @apply font-body text-xs tracking-widest2 text-gold-400 uppercase;
+    letter-spacing: 0.35em;
+  }
+
+  .btn-gold {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full bg-gold-gradient bg-[length:200%_100%] px-8 py-4 font-body text-sm font-semibold text-obsidian-500 shadow-gold transition-all duration-500 hover:bg-right hover:shadow-gold-lg;
+  }
+
+  .btn-outline-gold {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-gold-600/50 px-8 py-4 font-body text-sm font-semibold text-ivory transition-all duration-500 hover:border-gold-400 hover:bg-gold-400/10;
+  }
+
+  .section-padding {
+    @apply px-6 py-24 sm:px-10 sm:py-32 lg:px-16;
+  }
+}
