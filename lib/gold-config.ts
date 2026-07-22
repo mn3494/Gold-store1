@@ -109,3 +109,4 @@ export function calculateWeightFromBudget({
 
   return weight;
 }
+}
