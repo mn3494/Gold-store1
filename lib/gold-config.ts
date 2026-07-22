@@ -9,7 +9,7 @@ export const goldConfig = {
 };
 
 export const toPersianDigits = (value: number | string): string => {
-  const str = typeof value === "number" ? Math.round(value).toLocaleString("en-US") : value;
+  const str = typeof value === "number" ? Math.round(value).toLocaleString("en-US") : value; ?? ""
   const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
   return str.replace(/[0-9]/g, (d) => persianDigits[parseInt(d, 10)]);
 };
