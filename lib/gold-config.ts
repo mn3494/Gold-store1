@@ -1,6 +1,3 @@
-// تنظیمات طلا
-// واحد قیمت: تومان به ازای هر گرم طلای ۱۸ عیار
-
 export const goldConfig = {
   pricePerGram18k: 6850000,
   lastUpdated: "۱۴۰۴/۰۵/۰۱",
@@ -10,10 +7,9 @@ export const goldConfig = {
 };
 
 export const toPersianDigits = (value: number | string): string => {
-  const str =
-    typeof value === "number"
-      ? Math.round(value).toLocaleString("en-US")
-      : value;
+  const str = typeof value === "number"
+    ? Math.round(value).toLocaleString("en-US")
+    : value;
 
   const persianDigits = [
     "۰",
@@ -28,7 +24,9 @@ export const toPersianDigits = (value: number | string): string => {
     "۹",
   ];
 
-return str.replace(/[0-9]/g, (d) => persianDigits[parseInt(d, 10)] ?? d);
+  return str.replace(/[0-9]/g, (d) => persianDigits[Number(d)] ?? d);
+};
+
 export const toEnglishDigits = (value: string): string => {
   const persianDigits = [
     "۰",
@@ -68,22 +66,12 @@ export function calculateGoldPrice({
   taxPercent,
 }: GoldPriceInputs) {
   const basePrice = weightGrams * pricePerGram;
-
   const wage = basePrice * (wagePercent / 100);
-
   const profit = (basePrice + wage) * (profitPercent / 100);
-
   const tax = (wage + profit) * (taxPercent / 100);
-
   const total = basePrice + wage + profit + tax;
 
-  return {
-    basePrice,
-    wage,
-    profit,
-    tax,
-    total,
-  };
+  return { basePrice, wage, profit, tax, total };
 }
 
 export function calculateWeightFromBudget({
@@ -93,6 +81,7 @@ export function calculateWeightFromBudget({
   profitPercent,
   taxPercent,
 }: Omit<GoldPriceInputs, "weightGrams"> & { budget: number }) {
+
   const wageFactor = wagePercent / 100;
   const profitFactor = profitPercent / 100;
   const taxFactor = taxPercent / 100;
@@ -104,9 +93,7 @@ export function calculateWeightFromBudget({
     (wageFactor + (1 + wageFactor) * profitFactor) * taxFactor;
 
   const base = budget / multiplier;
-
   const weight = base / pricePerGram;
 
   return weight;
-}
 }
