@@ -28,9 +28,7 @@ export const toPersianDigits = (value: number | string): string => {
     "۹",
   ];
 
-  return str.replace(/[0-9]/g, (d) => persianDigits[parseInt(d, 10)]);
-};
-
+return str.replace(/[0-9]/g, (d) => persianDigits[parseInt(d, 10)] ?? d);
 export const toEnglishDigits = (value: string): string => {
   const persianDigits = [
     "۰",
