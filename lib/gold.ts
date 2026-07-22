@@ -6,8 +6,14 @@ lastUpdated: "۱۴۰۴/۰۵/۰۱",
   wagePercent: 12,
   profitPercent: 7,
   taxPercent: 9,
+  trend: [
+    { date: "شنبه", price: 6800000 },
+    { date: "یکشنبه", price: 6820000 },
+    { date: "دوشنبه", price: 6840000 },
+    { date: "سه‌شنبه", price: 6830000 },
+    { date: "چهارشنبه", price: 6850000 },
+  ],
 };
-
 export const goldConfig = goldPriceConfig;
 
 export const toPersianDigits = (input: number | string): string => {
