@@ -3,7 +3,14 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Calculator } from "lucide-react";
-import { calculateGoldPrice, toEnglishDigits, toPersianDigits } from "@/lib/gold";
+
+import {
+  calculateGoldPrice,
+  goldPriceConfig,
+  toEnglishDigits,
+  toPersianDigits,
+} from "@/lib/gold";
+
 import { viewportOnce } from "@/lib/motion";
 
 export default function WageCalculator() {
@@ -13,12 +20,14 @@ export default function WageCalculator() {
   const result = useMemo(() => {
     const w = parseFloat(toEnglishDigits(weight)) || 0;
     const wg = parseFloat(toEnglishDigits(wage)) || 0;
-import { goldPriceConfig } from "@/lib/gold";    
-return calculateGoldPrice({
-  weightGrams: w,
-  wagePercent: wg,
-  pricePerGram: goldPriceConfig.pricePerGram18k,
-});
+
+    return calculateGoldPrice({
+      weightGrams: w,
+      wagePercent: wg,
+      pricePerGram: goldPriceConfig.pricePerGram18k,
+    });
+  }, [weight, wage]);
+
   return (
     <motion.div
       id="wage-calculator"
@@ -32,13 +41,17 @@ return calculateGoldPrice({
         <Calculator className="h-4 w-4" />
         <p className="text-xs">ماشین‌حساب اجرت</p>
       </div>
+
       <p className="mt-3 font-display text-lg text-ivory">
         قیمت نهایی طلای ساخته‌شده را برآورد کنید
       </p>
 
       <div className="mt-6 grid grid-cols-2 gap-4">
         <label className="block">
-          <span className="mb-2 block text-xs text-muted">وزن (گرم)</span>
+          <span className="mb-2 block text-xs text-muted">
+            وزن (گرم)
+          </span>
+
           <input
             type="text"
             inputMode="decimal"
@@ -48,8 +61,12 @@ return calculateGoldPrice({
             className="w-full rounded-xl border border-gold-600/20 bg-obsidian-500/60 px-4 py-3 text-left text-ivory focus:border-gold-400 focus:outline-none"
           />
         </label>
+
         <label className="block">
-          <span className="mb-2 block text-xs text-muted">اجرت ساخت (درصد)</span>
+          <span className="mb-2 block text-xs text-muted">
+            اجرت ساخت (درصد)
+          </span>
+
           <input
             type="text"
             inputMode="decimal"
@@ -62,32 +79,51 @@ return calculateGoldPrice({
       </div>
 
       <div className="mt-6 flex flex-col gap-2 border-t border-gold-600/10 pt-5 text-sm">
-        <div className="flex items-center justify-between text-muted">
+        <div className="flex justify-between text-muted">
           <span>ارزش پایه طلا</span>
-          <span dir="ltr">{toPersianDigits(result.bullionValue)}</span>
+          <span dir="ltr">
+            {toPersianDigits(result.bullionValue)}
+          </span>
         </div>
-        <div className="flex items-center justify-between text-muted">
+
+        <div className="flex justify-between text-muted">
           <span>اجرت ساخت</span>
-          <span dir="ltr">{toPersianDigits(result.wageValue)}</span>
+          <span dir="ltr">
+            {toPersianDigits(result.wageValue)}
+          </span>
         </div>
-        <div className="flex items-center justify-between text-muted">
+
+        <div className="flex justify-between text-muted">
           <span>سود فروش (۷٪)</span>
-          <span dir="ltr">{toPersianDigits(result.profitValue)}</span>
+          <span dir="ltr">
+            {toPersianDigits(result.profitValue)}
+          </span>
         </div>
-        <div className="flex items-center justify-between text-muted">
+
+        <div className="flex justify-between text-muted">
           <span>مالیات بر ارزش‌افزوده (۹٪)</span>
-          <span dir="ltr">{toPersianDigits(result.taxValue)}</span>
+          <span dir="ltr">
+            {toPersianDigits(result.taxValue)}
+          </span>
         </div>
-        <div className="mt-3 flex items-center justify-between border-t border-gold-600/15 pt-3">
-          <span className="font-display text-ivory">مبلغ نهایی</span>
-          <span className="font-display text-xl text-gradient-gold" dir="ltr">
+
+        <div className="mt-3 flex justify-between border-t border-gold-600/15 pt-3">
+          <span className="font-display text-ivory">
+            مبلغ نهایی
+          </span>
+
+          <span
+            className="font-display text-xl text-gradient-gold"
+            dir="ltr"
+          >
             {toPersianDigits(result.total)} تومان
           </span>
         </div>
       </div>
 
       <p className="mt-5 text-xs leading-6 text-muted">
-        این محاسبه برآوردی و بر اساس عرف رایج بازار طلای ایران است. قیمت نهایی هر سفارش پس از استعلام از کارشناسان ما قطعی می‌شود.
+        این محاسبه برآوردی و بر اساس عرف رایج بازار طلای ایران است.
+        قیمت نهایی هر سفارش پس از استعلام از کارشناسان ما قطعی می‌شود.
       </p>
     </motion.div>
   );
