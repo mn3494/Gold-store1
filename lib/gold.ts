@@ -97,9 +97,51 @@ interface GoldPriceInput {
 }
 
 
-export function calculateGoldPrice({
-  weightGrams,
-  pricePerGram,
-  wagePercent = goldPriceConfig.wagePercent,
-  profitPercent = goldPriceConfig.profitPercent,
-  taxPercent = goldPriceConfig
+  taxPercent = goldPriceConfig.taxPercent,
+}: GoldPriceInput) {
+  const bullionValue = weightGrams * pricePerGram;
+
+  const wageValue = bullionValue * (wagePercent / 100);
+  const profitValue = (bullionValue + wageValue) * (profitPercent / 100);
+  const taxValue = (wageValue + profitValue) * (taxPercent / 100);
+
+  const total =
+    bullionValue +
+    wageValue +
+    profitValue +
+    taxValue;
+
+  return {
+    bullionValue,
+    wageValue,
+    profitValue,
+    taxValue,
+    total,
+
+    // برای سازگاری با بقیه کامپوننت‌ها
+    basePrice: bullionValue,
+    wage: wageValue,
+    profit: profitValue,
+    tax: taxValue,
+  };
+}
+
+export function estimatePrice(product: any): number {
+  const weight = Number(product.weight ?? product.weightGrams ?? 0);
+  const purity = Number(product.purity ?? 18);
+
+  const pricePerGram =
+    goldPriceConfig.pricePerGram18k * (purity / 18);
+
+  return calculateGoldPrice({
+    weightGrams: weight,
+    pricePerGram,
+  }).total;
+}
+
+export function purityLabel(purity: number): string {
+  if (purity === 24) return "۲۴ عیار";
+  if (purity === 18) return "۱۸ عیار";
+  if (purity === 14) return "۱۴ عیار";
+  return `${purity} عیار`;
+}q
