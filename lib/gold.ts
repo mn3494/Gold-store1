@@ -1,6 +1,7 @@
 // lib/gold.ts
 
 export const goldPriceConfig = {
+lastUpdated: "۱۴۰۴/۰۵/۰۱",
   pricePerGram18k: 6850000,
   wagePercent: 12,
   profitPercent: 7,
