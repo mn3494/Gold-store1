@@ -13,9 +13,12 @@ export default function WageCalculator() {
   const result = useMemo(() => {
     const w = parseFloat(toEnglishDigits(weight)) || 0;
     const wg = parseFloat(toEnglishDigits(wage)) || 0;
-    return calculateGoldPrice({ weightGrams: w, wagePercent: wg });
-  }, [weight, wage]);
-
+import { goldPriceConfig } from "@/lib/gold";    
+return calculateGoldPrice({
+  weightGrams: w,
+  wagePercent: wg,
+  pricePerGram: goldPriceConfig.pricePerGram18k,
+});
   return (
     <motion.div
       id="wage-calculator"
