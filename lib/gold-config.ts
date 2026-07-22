@@ -1,7 +1,14 @@
-// این عدد را هر روز صبح، بر اساس نرخ لحظه‌ای بازار طلا به‌روزرسانی کنید.
-// واحد: تومان به‌ازای هر گرم طلای ۱۸ عیار
+// این عدد را هر روز صبح، بر اساس نرخ لحظه‌ای بازار طلا به‌روزرسانی کنید.// واحد: تومان به‌ازای هر گرم طلای ۱۸ عیار
 export const goldConfig = {
-  pricePerGram18k: 6850000,
+  pricePerGram18k: 6850000export const toPersianDigits = (value: number | string): string => {
+  const str = typeof value === "number"
+    ? Math.round(value).toLocaleString("en-US")
+    : value;
+
+  const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+
+  return str.replace(/[0-9]/g, (d) => persianDigits[parseInt(d, 10)]);
+};,
   lastUpdated: "۱۴۰۴/۰۵/۰۱",
   defaultWagePercent: 12, // اجرت پیش‌فرض (درصد)
   defaultProfitPercent: 7, // سود پیش‌فرض (درصد)
